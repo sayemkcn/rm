@@ -18,7 +18,8 @@ public class User extends BaseEntity{
     private String password;
     @Column(name = "user_country")
     private String country;
-    private Long gcm;
+    @Column(name = "gcm")
+    private String gcm;
     private boolean deleted;
     @Column(name = "user_type")
     private String type;
@@ -32,7 +33,10 @@ public class User extends BaseEntity{
     @ManyToOne
     private App app;
 
-    public User(String name, String email, String phone, String password, String country, Long gcm, boolean deleted, String type, Collection<Resource> resourceList, Collection<SocialMediaType> socialMediaTypeList, Collection<Report> reportList, App app) {
+    @OneToOne(mappedBy = "user")
+    private UserAuth userAuth;
+
+    public User(String name, String email, String phone, String password, String country, String gcm, boolean deleted, String type, Collection<Resource> resourceList, Collection<SocialMediaType> socialMediaTypeList, Collection<Report> reportList, App app, UserAuth userAuth) {
         this.name = name;
         this.email = email;
         this.phone = phone;
@@ -45,6 +49,7 @@ public class User extends BaseEntity{
         this.socialMediaTypeList = socialMediaTypeList;
         this.reportList = reportList;
         this.app = app;
+        this.userAuth = userAuth;
     }
 
     public String getName() {
@@ -87,12 +92,20 @@ public class User extends BaseEntity{
         this.country = country;
     }
 
-    public Long getGcm() {
+    public String getGcm() {
         return gcm;
     }
 
-    public void setGcm(Long gcm) {
+    public void setGcm(String gcm) {
         this.gcm = gcm;
+    }
+
+    public UserAuth getUserAuth() {
+        return userAuth;
+    }
+
+    public void setUserAuth(UserAuth userAuth) {
+        this.userAuth = userAuth;
     }
 
     public boolean isDeleted() {
@@ -151,13 +164,14 @@ public class User extends BaseEntity{
                 ", phone='" + phone + '\'' +
                 ", password='" + password + '\'' +
                 ", country='" + country + '\'' +
-                ", gcm=" + gcm +
+                ", gcm='" + gcm + '\'' +
                 ", deleted=" + deleted +
                 ", type='" + type + '\'' +
                 ", resourceList=" + resourceList +
                 ", socialMediaTypeList=" + socialMediaTypeList +
                 ", reportList=" + reportList +
                 ", app=" + app +
+                ", userAuth=" + userAuth +
                 "} " + super.toString();
     }
 }

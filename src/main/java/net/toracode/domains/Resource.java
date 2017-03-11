@@ -22,14 +22,17 @@ public class Resource extends BaseEntity {
     private Collection<Comment> commentList;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "resource")
     private Collection<Like> likeList;
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "resource")
+    private Collection<Report> reportList;
 
-    public Resource(String name, String path, AppCategory category, User user, Collection<Comment> commentList, Collection<Like> likeList) {
+    public Resource(String name, String path, AppCategory category, User user, Collection<Comment> commentList, Collection<Like> likeList, Collection<Report> reportList) {
         this.name = name;
         this.path = path;
         this.category = category;
         this.user = user;
         this.commentList = commentList;
         this.likeList = likeList;
+        this.reportList = reportList;
     }
 
     public String getName() {
@@ -80,6 +83,15 @@ public class Resource extends BaseEntity {
         this.likeList = likeList;
     }
 
+
+    public Collection<Report> getReportList() {
+        return reportList;
+    }
+
+    public void setReportList(Collection<Report> reportList) {
+        this.reportList = reportList;
+    }
+
     @Override
     public String toString() {
         return "Resource{" +
@@ -89,6 +101,7 @@ public class Resource extends BaseEntity {
                 ", user=" + user +
                 ", commentList=" + commentList +
                 ", likeList=" + likeList +
+                ", reportList=" + reportList +
                 "} " + super.toString();
     }
 }
